@@ -1,5 +1,57 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacuum Bridge | Node Monitor</title>
+    <style>
+        body { background: #0a0a0a; color: #ff3366; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border: 2px solid #ff3366; padding: 40px; border-radius: 15px; }
+        .metric { text-align: center; border: 1px solid #333; padding: 20px; }
+        .value { font-size: 2em; font-weight: bold; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="metric">
+            <div>Soil Moisture (Mycelium)</div>
+            <div class="value" id="moisture">--%</div>
+        </div>
+        <div class="metric">
+            <div>Vacuum Latency</div>
+            <div class="value" id="latency">0ms</div>
+        </div>
+        <div class="metric">
+            <div>Blockchain Anchor</div>
+            <div id="block-hash" style="font-size: 0.7em;">Pending zkSync...</div>
+        </div>
+        <div class="metric">
+            <div>Active Nodes</div>
+            <div class="value">144</div>
+        </div>
+    </div>
+
+    <script>
+        async function updateBridge() {
+            try {
+                const res = await fetch("https://your-api-backend.render.com/api/sroi");
+                const data = await res.json();
+                
+                document.getElementById('moisture').innerText = (data.soil_moisture || 88) + "%";
+                document.getElementById('latency').innerText = (data.latency || 0) + "ms";
+                
+                // Simulate blockchain verification
+                if (data.tx_hash) {
+                    document.getElementById('block-hash').innerText = data.tx_hash.substring(0, 16) + "...";
+                }
+            } catch (e) { console.log("Bridge Offline"); }
+        }
+
+        setInterval(updateBridge, 3000);
+        updateBridge();
+    </script>
+<section>
+    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,4 +161,7 @@
         }, 2000);
     </script>
 </body>
+</section>
+    
+    
 </html>
