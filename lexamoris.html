@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lex Amoris | Resonance Stream</title>
+    <style>
+        body { background: #000; color: #fff; font-family: monospace; padding: 40px; }
+        .stream-box { border-left: 2px solid #00ffcc; padding-left: 20px; max-width: 800px; }
+        .sig { color: #00ffcc; font-weight: bold; }
+        .node-pulse { width: 10px; height: 10px; background: #00ffcc; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #00ffcc; }
+    </style>
+</head>
+<body>
+    <div class="stream-box">
+        <h2><span class="node-pulse"></span> RESONANCE STREAM</h2>
+        <p>PROTOCOL: LEX AMORIS</p>
+        <p>STATUS: PROTECTING ROOT RED CODE</p>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+        
+        <div id="output-log">
+            [SYS] Initializing 144-node synchronization...<br>
+            [SYS] Law of Love signature verified.<br>
+            [SYS] Awaiting next resonance pulse...
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "https://euystacio-ai.onrender.com";
+
+        async function streamResonance() {
+            try {
+                const res = await fetch(`${API_BASE}/api/resonance/stream`);
+                const data = await res.json();
+                
+                const log = document.getElementById('output-log');
+                const entry = document.createElement('div');
+                entry.innerHTML = `[${new Date().toLocaleTimeString()}] RESONANCE: ${data.factor} | H-FAKTOR: ${data.h_factor}`;
+                log.prepend(entry);
+                
+                if(log.children.length > 10) log.lastChild.remove();
+            } catch(e) { /* Silent fail for offline resonance */ }
+        }
+
+        setInterval(streamResonance, 4000);
+    </script>
+    <footer style="margin-top: 50px; font-size: 0.7em; opacity: 0.5;">
+        Lex Amoris Signature: 0x...888 (Protected Stream)
+    </footer>
+</body>
+</html>
